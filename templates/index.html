@@ -12,19 +12,16 @@
 <body>
     <div class="container">
         <h1>Welcome to the "Great Number Game"</h1>
-        <h3>I'm thinking of a number between1 and 100</h3>
+        <h3>I'm thinking of a number between 1 and 100</h3>
         <h3>Go ahead take a guess below...</h3>
-    <form action="POST" action="/">
+    <form method="POST" action="/">
         <input type="text" name="user_guess" id="">
         <input type="submit" value="Submit">
     </form>
 
-    <div {{session['addclass']}} class="d-block p-2 bg-primary text-white"  >
-        {% with messages = get_flashed_messages() %} {% if messages %}
-            <h1 class=flashes> {{ message }} </h1>
-        {% endif %}
-        {% endwith %}
-        </div>
+    <div {{addclass}} class="d-block p-2 bg-primary text-white"  >
+      <h1>{{message}}</h1>
+        
     </div>
     
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

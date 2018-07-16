@@ -5,25 +5,32 @@ app.secret_key = "sunday"
 
 @app.route('/', methods = ['GET','POST'])
 def number_guess():
+    # message = ""
+   
     if 'guess' not in session:
         session['guess'] = 0
-    if 'addclass' not in session:
-        session['addclass'] = "class ='.d-none'"
     if 'rand_num' not in session:
         session['rand_num'] = random.randrange(0, 101)  # random number between 0-100
-        print session['rand_num']
+    
     if request.method =='POST':
         session['guess'] = request.form['user_guess']
+        print (session['guess'])
+        print (session['rand_num'])
         if session['guess'] < session['rand_num']:
-            flash("your lower")
-            session['addclass'] = "class =''"
+            # message = "your  too low"
+            print ("TOO LOW")
+
         elif session['guess'] > session['rand_num']:
-           flash ("its higher")
+        #     session['message'] = "your too high"
+            print ("TOO HIGH")
+            print("session guess is:" + session['guess'])
         elif session['guess'] == session['rand_num']:
-            flash("correct")
+            # session['message'] = "OH YEAH! correct"
+            print ("JUST RIGHT")
+        return render_template('index.html')
     elif request.method == 'GET':
-        pass
-    return render_template('index.html')
+        return render_template('index.html')
+        
     
    
 app.run(debug=True)
