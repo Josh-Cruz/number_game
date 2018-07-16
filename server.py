@@ -5,29 +5,32 @@ app.secret_key = "sunday"
 
 @app.route('/', methods = ['GET','POST'])
 def number_guess():
-    # message = ""
-   
+    message = ""
+    reset = '"hidden"'
     if 'guess' not in session:
         session['guess'] = 0
     if 'rand_num' not in session:
-        session['rand_num'] = random.randrange(0, 101)  # random number between 0-100
-    
+        session['rand_num'] = int(random.randrange(0, 101))  # random number between 0-100
+        print(session['rand_num'])
     if request.method =='POST':
-        session['guess'] = request.form['user_guess']
-        print (session['guess'])
-        print (session['rand_num'])
-        if session['guess'] < session['rand_num']:
-            # message = "your  too low"
-            print ("TOO LOW")
-
-        elif session['guess'] > session['rand_num']:
-        #     session['message'] = "your too high"
-            print ("TOO HIGH")
-            print("session guess is:" + session['guess'])
-        elif session['guess'] == session['rand_num']:
-            # session['message'] = "OH YEAH! correct"
-            print ("JUST RIGHT")
-        return render_template('index.html')
+        if request.form['submit'] == 'submit':
+            session['guess'] = int(request.form['user_guess'])
+            print(session['rand_num'])
+            if session['guess'] < session['rand_num']:
+                message = "your  too low"
+            elif session['guess'] > session['rand_num']:
+                message = "your too high"
+            elif session['guess'] == session['rand_num']:
+                message = session['rand_num'], "Is correct!"
+                reset = 'submit'
+        elif request.form['submit'] == 'reset':
+            # message = ""
+            # reset = 'hidden'
+            # session['guess'] = 0
+            # session['rand_num'] = int(random.randrange(0, 101))
+            # return render_template('index.html')
+            print "reset hit"
+        return render_template('index.html', message = message, reset = reset)
     elif request.method == 'GET':
         return render_template('index.html')
         
